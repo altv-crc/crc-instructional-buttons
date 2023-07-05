@@ -20,7 +20,7 @@ function draw() {
     native.drawScaleformMovie(scaleform, 0.4, 0.48, 1, 1, 255, 255, 255, 255, 0);
 }
 
-async function set(_buttons: { text: string; input: string }[]) {
+async function setFunc(_buttons: { text: string; input: string }[]) {
     buttons = _buttons;
 
     if (buttons.length <= 0) {
@@ -57,7 +57,7 @@ async function set(_buttons: { text: string; input: string }[]) {
     interval = alt.setInterval(draw, 0);
 }
 
-function clear() {
+function clearFunc() {
     if (interval) {
         alt.clearInterval(interval);
         interval = undefined;
@@ -68,23 +68,25 @@ function clear() {
     buttons = [];
 }
 
-// action: 'set' | 'clear', buttons: Array<{ text: string, input: string }>
-alt.emit('crc-instructional-buttons');
-alt.on('crc-instructional-buttons', (action: 'set' | 'clear', buttons: Array<{ text: string; input: string }>) => {
-    if (!action) {
+function handleActions(options: { set?: Array<{ text: string; input: string }>; clear?: boolean }) {
+    if (typeof options !== 'object') {
         return;
     }
 
-    switch (action) {
-        case 'clear':
-            clear();
-            break;
-        case 'set':
-            if (!buttons) {
-                throw new Error(`Must provide buttons to display`);
-            }
+    const { set, clear } = options;
 
-            set(buttons);
-            break;
+    if (set) {
+        setFunc(set);
     }
-});
+
+    if (clear) {
+        clearFunc();
+    }
+}
+
+// Used to define the cross-resoure event suggestions extension
+// If it's too complex though, don't bother
+
+// options: { set?: Array<{ text: string; input: string }> }
+alt.emit('crc-instructional-buttons');
+alt.on('crc-instructional-buttons', handleActions);

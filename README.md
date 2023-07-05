@@ -40,18 +40,20 @@ _Your resource structure may vary_
 ### Showing Buttons
 
 ```ts
-alt.emit('crc-instructional-buttons', 'set', [
-    { text: 'Exit', input: '~INPUT_FRONTEND_RRIGHT~' },
-    { text: 'Enter', input: '~INPUT_FRONTEND_RDOWN~' },
-    { text: 'Change', input: '~INPUTGROUP_CELLPHONE_NAVIGATE_LR~' },
-    { text: 'Navigate', input: '~INPUTGROUP_CELLPHONE_NAVIGATE_UD~' },
-]);
+alt.emit('crc-instructional-buttons', {
+    set: [
+        { text: 'Back / Exit', input: '~INPUT_FRONTEND_RRIGHT~' },
+        { text: 'Enter', input: '~INPUT_FRONTEND_RDOWN~' },
+        { text: 'Change', input: '~INPUTGROUP_CELLPHONE_NAVIGATE_LR~' },
+        { text: 'Navigate', input: '~INPUTGROUP_CELLPHONE_NAVIGATE_UD~' },
+    ],
+});
 ```
 
 ### Hiding Buttons
 
 ```ts
-alt.emit('crc-instructional-buttons', 'clear');
+alt.emit('crc-instructional-buttons', { clear: true });
 ```
 
 # Preview
