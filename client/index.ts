@@ -68,10 +68,23 @@ function clear() {
     buttons = [];
 }
 
-// buttons: Array<{ text: string, input: string }>
-alt.emit('crc-instructional-buttons-set');
-alt.on('crc-instructional-buttons-set', set);
+// action: 'set' | 'clear', buttons: Array<{ text: string, input: string }>
+alt.emit('crc-instructional-buttons');
+alt.on('crc-instructional-buttons', (action: 'set' | 'clear', buttons: Array<{ text: string; input: string }>) => {
+    if (!action) {
+        return;
+    }
 
-// buttons: Array<{ text: string, input: string }>
-alt.emit('crc-instructional-buttons-clear');
-alt.on('crc-instructional-buttons-clear', clear);
+    switch (action) {
+        case 'clear':
+            clear();
+            break;
+        case 'set':
+            if (!buttons) {
+                throw new Error(`Must provide buttons to display`);
+            }
+
+            set(buttons);
+            break;
+    }
+});
