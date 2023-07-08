@@ -84,9 +84,4 @@ function handleActions(options: { set?: Array<{ text: string; input: string }>; 
     }
 }
 
-// Used to define the cross-resoure event suggestions extension
-// If it's too complex though, don't bother
-
-// options: { set?: Array<{ text: string; input: string }> }
-alt.emit('crc-instructional-buttons');
 alt.on('crc-instructional-buttons', handleActions);

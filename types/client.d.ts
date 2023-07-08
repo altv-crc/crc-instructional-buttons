@@ -24,5 +24,7 @@ interface Options {
 }
 
 declare module 'alt-client' {
-    export function emit(eventName: 'crc-instructional-buttons', data: Partial<Options>);
+    interface ICustomEmitEvent {
+        'crc-instructional-buttons': (data: Options) => void;
+    }
 }
